@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>New Firearms · Editor</title>
+  <link rel="stylesheet" href="./style.css">
+  <script defer src="./schema.js"></script>
+  <script defer src="./workspace.js"></script>
+  <script defer src="./zip.js"></script>
+  <script defer src="./app.js"></script>
+</head>
+<body>
+<main class="window">
+  <header>
+    <div><small>W.I.P. Weapons editor</small><h1>NEW FIREARMS<span>_</span></h1></div>
+    <div class="status">
+      <strong id="status" role="status">Choose a mod folder</strong><small id="root"></small>
+      <div class="item-actions">
+        <button id="open-folder" hidden>Open folder</button>
+        <button id="import-folder">Import folder</button>
+        <input id="folder-input" type="file" webkitdirectory multiple hidden>
+        <button id="export-folder" hidden>Export ZIP</button>
+      </div>
+    </div>
+  </header>
+  <div class="workspace">
+    <aside class="library">
+      <h2>01 / Library</h2>
+      <nav id="kinds" aria-label="Category"></nav>
+      <input id="filter" type="search" placeholder="Find an item…" aria-label="Find an item">
+      <div id="items"></div>
+      <button id="create" class="accent" disabled>+ New item</button>
+    </aside>
+    <section class="inspector">
+      <h2>02 / Config</h2>
+      <div class="item-title"><h3 id="title">Select an item</h3><div class="item-actions">
+        <button id="duplicate" hidden>Duplicate</button><button id="reload" hidden>Reload</button>
+        <button id="delete-gun" class="danger" hidden>Delete</button>
+      </div></div>
+      <small id="path"></small>
+      <nav id="tabs" aria-label="Config tab"></nav>
+      <div id="fields"></div>
+    </section>
+    <section class="preview">
+      <h2>03 / Preview</h2>
+      <label id="variant-label" hidden><input id="variant" type="checkbox"> <span id="variant-text"></span></label>
+      <label id="mag-label" hidden>Magazine <select id="mag"></select></label>
+      <canvas id="canvas" width="640" height="440" aria-label="Sprite preview"></canvas>
+      <p id="preview-note"></p>
+      <button id="grab" hidden>Pick grip point</button>
+      <small id="grip"></small>
+    </section>
+  </div>
+  <footer><span>Open Folder availability https://developer.mozilla.org/en-US/docs/Web/API/Window/showDirectoryPicker</span><span>Autosave enabled in direct-access mode · minigame editing not included</span></footer>
+</main>
+<dialog id="new-item">
+  <form id="new-form">
+    <h2 id="dialog-title">New item</h2>
+    <label>Template <select id="template" required></select></label>
+    <label>Folder ID <input id="new-id" pattern="[a-zA-Z0-9_.\-]+" placeholder="nf.my-item" required></label>
+    <label>Name <input id="new-name" required></label>
+    <p id="create-error" role="alert"></p>
+    <div class="dialog-actions"><button type="button" id="cancel">Cancel</button><button id="submit-item" class="accent">Create</button></div>
+  </form>
+</dialog>
+<dialog id="asset-rename" aria-labelledby="asset-rename-title">
+  <h2 id="asset-rename-title">Rename asset?</h2>
+  <p id="asset-rename-path"></p>
+  <small id="asset-rename-note"></small>
+  <form method="dialog" class="dialog-actions">
+    <button value="cancel" autofocus>Cancel</button>
+    <button value="path">Path only</button>
+    <button id="asset-rename-move" value="move" class="accent">Move file</button>
+  </form>
+</dialog>
+<dialog id="delete-dialog" aria-labelledby="delete-title">
+  <h2 id="delete-title">Delete weapon?</h2>
+  <p id="delete-name"></p>
+  <small>The weapon folder will be archived. COPY__ references in other items will be replaced with local copies of the sprites.</small>
+  <p id="delete-error" role="alert"></p>
+  <div class="dialog-actions">
+    <button id="cancel-delete" autofocus>Cancel</button>
+    <button id="confirm-delete" class="danger">Delete</button>
+  </div>
+</dialog>
+</body>
+</html>
